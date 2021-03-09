@@ -1,0 +1,36 @@
+def solution(str1, str2):
+    str1 = str1.upper()
+    str2 = str2.upper()
+
+    def sep(str):
+        s = []
+        for i in range(len(str) - 1):
+            f = True
+            #문자가 아닐 경우 패스
+            for j in range(i, i+2):
+                if str[j] < 'A' or str[j] > 'Z':
+                    f = False
+                    break
+            if f:
+                s.append(str[i:i+2])
+        return s
+
+    str_1 = sep(str1)
+    str_2 = sep(str2)
+
+    #전체 길이
+    str_all= len(str_1) + len(str_2)
+
+    #공집합일 경우
+    if str_all == 0:
+        return 65536
+
+    #교집합
+    str_and = 0
+    for i, i_1 in enumerate(str_1):
+        for j, j_1 in enumerate(str_2):
+            if i_1 == j_1:
+                str_2[j] = '-'
+                str_and +=1
+                break
+    return int(str_and/(str_all - str_and)*65536)
